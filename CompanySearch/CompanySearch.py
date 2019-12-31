@@ -43,24 +43,31 @@ def open_chrome():
 
 # get df with company names
 def get_df():
-    path = "C:\\Users\\Ivan Trindev\\ACT Capital Advisors\\DnS - Documents\\General\\DnS - Buyer Tracking List - 12.15.2019 - Sheppard Scrub.xlsx"
+    path = "C:\\Users\\Ivan Trindev\\ACT Capital Advisors\\DnS - Documents\\General\\D&S Mailing 2.xlsx"
 
-    df = pd.read_excel(path, sheet_name="Strategics - Final Marketing", skiprows=2)
+    df = pd.read_excel(path, sheet_name="Sheet3")
     return df
 
 # search for the companies
 def company_search():
     # sleep for 15 sec to give me time to pull up zoominfo
-    time.sleep(15)
+    time.sleep(2)
 
     # get df
     df = get_df()
 
     # request info for the first 10 companies in the list
     count = 0
-    while count < 10:
+    while count < 17:
         company = df["Company Name"].iloc[count]
-        send_keys(company + " {ENTER}")
+        name = company.split()
+
+        counter = 0
+        while counter < len(name) - 1:
+            send_keys(name[counter] + " {VK_SPACE}")
+            counter += 1
+
+        send_keys(name[len(name)-1] + " {ENTER}")
 
         time.sleep(float(decimal.Decimal(random.randrange(200, 400))/100))
 
